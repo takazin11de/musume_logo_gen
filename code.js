@@ -232,6 +232,7 @@ function createLogo(w_, h_, ctx, ctx1) {
   const rate=(w+h)/2.0/5000;
 
   Dilation(image1, image2, 43*rate, 3, 255);// white
+  marge_image(image2,image1,0,0,0,0,image1.width,image1.height, 3, 3);
   Dilation(image1, image6, 80*rate, 4, 255);// white
   Dilation(image1, image6, 80*rate, 6, 255);// white
   marge_image(image2,image6,1,1+5*rate,1,1,image1.width-1,image1.height-1, 255, 255);
@@ -243,7 +244,7 @@ function createLogo(w_, h_, ctx, ctx1) {
   Dilation(image3, image4, 15*rate, 0, 24);// 
   marge_image(image2,image4,1,1+5*rate,1,1,image1.width-1,image1.height-1, 0, 14);
 
-  marge_image(image2,image1,0,0,0,0,image1.width,image1.height, 3, 3);
+
   marge_image(image2,image1,0,0,0,0,image1.width,image1.height, 4, 4);
   marge_image(image2,image1,0,0,0,0,image1.width,image1.height, 5, 5);
 
@@ -269,10 +270,13 @@ function createLogo(w_, h_, ctx, ctx1) {
     let size_d=0;
     let dot_posy=it1*dot_distance/2;
     let dot_posx_offset=it3*dot_distance/2;
-    let dot_start = range_main_min+(range_main_max-range_main_min)*230/1000;
+    let dot_start = range_main_min+(range_main_max-range_main_min)*210/1000;
+    let dot_end = range_main_min+(range_main_max-range_main_min)*700/1000;
+
 
     if(dot_start < dot_posy){
-      size_d=(dot_posy-dot_start)*0.075;
+      let y=dot_posy-dot_start;
+      size_d=y*0.85/(dot_end-dot_start)*dot_distance;
     }
     if(size_d>dot_distance*1.1){
       size_d=dot_distance*1.1;
@@ -283,7 +287,7 @@ function createLogo(w_, h_, ctx, ctx1) {
 
     for(it2=0;it2*dot_distance<w;it2++){
       let dot_posx=it2*dot_distance+dot_posx_offset;
-      marge_image(image5,cl,dot_posx,dot_posy,0,0,size_d,size_d, 255, 1);
+      marge_image(image5,cl,dot_posx-size_d/2,dot_posy-size_d/2,0,0,size_d,size_d, 255, 1);
     }
   }
   for(it1=0;it1<w;it1++){
